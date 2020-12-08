@@ -43,5 +43,59 @@ namespace TechJobsTests
 
         }
 
+        [TestMethod]
+        public void TestJobsToStringMethodForBlankSpace()
+        {
+            Job test_job = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+            string output = test_job.ToString();
+            Assert.IsTrue(output.StartsWith("\n"));
+            Assert.IsTrue(output.EndsWith("\n"));
+        }
+
+        [TestMethod]
+        public void TestJobToStringMethodForFields()
+        {
+            Job test_job = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+            Assert.IsTrue(test_job.ToString().Contains("ID"));
+            Assert.IsTrue(test_job.ToString().Contains("Name"));
+            Assert.IsTrue(test_job.ToString().Contains("Employer"));
+            Assert.IsTrue(test_job.ToString().Contains("Location"));
+            Assert.IsTrue(test_job.ToString().Contains("Job"));
+            Assert.IsTrue(test_job.ToString().Contains("Competency"));
+        }
+
+         [TestMethod]
+         public void IsPropertyValueEmpty()
+        {
+            Job test_job = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency());
+
+            Assert.IsNull(test_job.JobCoreCompetency.Value);
+            
+        }
+
+        [TestMethod]
+        public void TestJobToStringDataNotAvailableOutput()
+        {
+           
+            Job test_job = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency());
+            Assert.AreEqual(93, test_job.ToString().IndexOf("Data not available"));
+            Assert.AreEqual("Data not available", test_job.ToString()[93..^1]);
+
+        }
+            
+                                        
+
+        [TestMethod]
+        public void TestJobToStringMethodForOnlyIdOutput()
+        {
+            Job test_job = new Job();
+            Assert.AreEqual("OOPS! This job does not seem to exist.", test_job.ToString());
+        }
+
+
     }
+
 }
+
+           
+

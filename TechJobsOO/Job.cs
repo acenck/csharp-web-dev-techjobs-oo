@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace TechJobsOO
 {
-    public class Job
+    public class Job 
     {
         public int Id { get; }
         private static int nextId = 1;
@@ -10,7 +13,7 @@ namespace TechJobsOO
         public Employer EmployerName { get; set; }
         public Location EmployerLocation { get; set; }
         public PositionType JobType { get; set; }
-        public CoreCompetency JobCoreCompetency { get; set; }
+        public CoreCompetency JobCoreCompetency { get; set; } 
 
         // TODO: Add the two necessary constructors. Check!
 
@@ -19,6 +22,8 @@ namespace TechJobsOO
         {
             Id = nextId;
             nextId++;
+           
+          
         }
 
     
@@ -48,7 +53,55 @@ namespace TechJobsOO
 
         public override string ToString()
         {
-            return $"ID: {Id} \nName: {Name} \nEmployer: {EmployerName} \nLocation: {EmployerLocation} \nJob: {JobType} \nCompetency: {JobCoreCompetency} \n";
+            int id = Id;
+            string name = Name;
+            string employer = EmployerName?.Value;
+            string location = EmployerLocation?.Value;
+            string job = JobType?.Value;
+            string competency = JobCoreCompetency?.Value;
+            string emptyField = "Data not available";
+                            
+
+            var jobData = new List<string>() { name, employer, location, job, competency};
+
+            if (jobData.All(element => element == null || element == string.Empty))
+            {
+                return "OOPS! This job does not seem to exist.";
+            }
+
+             
+
+            for(int i=0; i < jobData.Count; i++)
+            {
+                if(jobData[i] == string.Empty || jobData[i] == null)
+                {
+
+                    jobData[i] = emptyField;
+                    
+                }
+                
+                
+            }
+
+            
+                return $"\nID: {id}" +
+                $"\nName: {jobData[0]}" +
+                $"\nEmployer: {jobData[1]}" +
+                $"\nLocation: {jobData[2]}" +
+                $"\nJob: {jobData[3]}" +
+                $"\nCompetency: {jobData[4]}" +
+                $"\n";
+
+            
+            
+
         }
+
     }
+
 }
+
+            
+
+
+        
