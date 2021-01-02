@@ -61,7 +61,7 @@ namespace TechJobsOO
             string competency = JobCoreCompetency?.Value;
             string emptyField = "Data not available";
                             
-
+            //bonus message to declare non-existent job when all fields are empty
             var jobData = new List<string>() { name, employer, location, job, competency};
 
             if (jobData.All(element => element == null || element == string.Empty))
@@ -70,7 +70,7 @@ namespace TechJobsOO
             }
 
              
-
+            // data not available applied to output for null or empty fields
             for(int i=0; i < jobData.Count; i++)
             {
                 if(jobData[i] == string.Empty || jobData[i] == null)
