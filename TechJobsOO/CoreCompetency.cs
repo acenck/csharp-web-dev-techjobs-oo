@@ -4,10 +4,7 @@ namespace TechJobsOO
     public class CoreCompetency : JobField
     {
 
-        public CoreCompetency() : base()
-        {
-
-        }
+        
 
         public CoreCompetency(string value) : base(value)
         {
@@ -15,12 +12,12 @@ namespace TechJobsOO
         }
        
        
-        // TODO: Change the fields to auto-implemented properties.
+    }
+}
+        
 
             
            
 
      
-    }
     
-}

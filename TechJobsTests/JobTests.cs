@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechJobsOO;
 
@@ -67,23 +68,47 @@ namespace TechJobsTests
          [TestMethod]
          public void IsPropertyValueEmpty()
         {
-            Job test_job = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency());
+            Job test_job = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency(""));
 
-            Assert.IsNull(test_job.JobCoreCompetency.Value);
+            Assert.IsTrue(string.IsNullOrEmpty(test_job.JobCoreCompetency.Value));
             
         }
 
         [TestMethod]
         public void TestJobToStringDataNotAvailableOutput()
         {
-           
-            Job test_job = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency());
-            Assert.AreEqual(93, test_job.ToString().IndexOf("Data not available"));
-            Assert.AreEqual("Data not available", test_job.ToString()[93..^1]);
+            Job test_job = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency(""));
+            string toFind = "Data not available";
+            var strLength = toFind.Length;
+            var stringIndex = test_job.ToString().IndexOf(toFind);
+            Assert.AreEqual("Data not available", test_job.ToString().Substring(stringIndex, strLength));
+         
 
         }
+
+        [TestMethod]
+        public void TestJobToStringDataDisplaysAfterCategory()
+        {
+            Job test_job = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency(""));
+            string findId = "ID: 1";
+            string findName = "Name: Product tester";
+            string findEmployer = "Employer: ACME";
+            string findLocation = "Location: Desert";
+            string findJob = "Job: Quality control";
+            string findCompetency = "Competency: Data not available";
+
+            var labels = new List<string>() { findId, findName, findEmployer, findLocation, findJob, findCompetency};
             
-                                        
+            foreach(var item in labels)
+
+
+            {
+                var strLength = item.Length;
+                var stringIndex = test_job.ToString().IndexOf(item);
+                Assert.AreEqual(item, test_job.ToString().Substring(stringIndex, strLength));
+            }
+                
+        }
 
         [TestMethod]
         public void TestJobToStringMethodForOnlyIdOutput()
@@ -96,6 +121,14 @@ namespace TechJobsTests
     }
 
 }
+
+                
+
+            
+           
+            
+                                        
+
 
            
 
