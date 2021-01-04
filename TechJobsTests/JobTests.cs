@@ -78,10 +78,10 @@ namespace TechJobsTests
         public void TestJobToStringDataNotAvailableOutput()
         {
             Job test_job = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency(""));
-            string toFind = "Data not available";
+            string toFind = "Competency: Data not available";
             var strLength = toFind.Length;
             var stringIndex = test_job.ToString().IndexOf(toFind);
-            Assert.AreEqual("Data not available", test_job.ToString().Substring(stringIndex, strLength));
+            Assert.AreEqual("Competency: Data not available", test_job.ToString().Substring(stringIndex, strLength));
          
 
         }
@@ -108,6 +108,13 @@ namespace TechJobsTests
                 Assert.AreEqual(item, test_job.ToString().Substring(stringIndex, strLength));
             }
                 
+        }
+
+        [TestMethod]
+        public void TestJobToStringOutputToEntireExpectedOutput()
+        {
+            Job test_job = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+            Assert.AreEqual($"\nID: 11\nName: Product tester\nEmployer: ACME\nLocation: Desert\nJob: Quality control\nCompetency: Persistence\n", test_job.ToString());
         }
 
         [TestMethod]
