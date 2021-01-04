@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechJobsOO;
@@ -19,14 +20,15 @@ namespace TechJobsTests
         {
             Job job1 = new Job();
             Job job2 = new Job();
-            Assert.AreEqual(1, job1.Id);
-            Assert.AreEqual(2, job2.Id);
+            Assert.IsTrue(job2.Id - job1.Id == 1);
+            
         }
 
         [TestMethod]
         public void TestJobConstructorSetsAllFields()
         {
             Job test_job = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+
 
             Assert.AreEqual("Product tester", test_job.Name);
             Assert.AreEqual("ACME", test_job.EmployerName.Value);
@@ -90,31 +92,33 @@ namespace TechJobsTests
         public void TestJobToStringDataDisplaysAfterCategory()
         {
             Job test_job = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency(""));
-            string findId = "ID: 1";
+            int findId = test_job.Id;
             string findName = "Name: Product tester";
             string findEmployer = "Employer: ACME";
             string findLocation = "Location: Desert";
             string findJob = "Job: Quality control";
             string findCompetency = "Competency: Data not available";
 
-            var labels = new List<string>() { findId, findName, findEmployer, findLocation, findJob, findCompetency};
-            
+            var labels = new List<string>() { findName, findEmployer, findLocation, findJob, findCompetency};
+            string idString = findId.ToString();
+            int idLength = idString.Length;
+            var idIndex = test_job.ToString().IndexOf(idString);
+
             foreach(var item in labels)
-
-
             {
                 var strLength = item.Length;
                 var stringIndex = test_job.ToString().IndexOf(item);
                 Assert.AreEqual(item, test_job.ToString().Substring(stringIndex, strLength));
             }
-                
+                Assert.AreEqual(idString, test_job.ToString().Substring(idIndex, idLength));
         }
 
+            
         [TestMethod]
         public void TestJobToStringOutputToEntireExpectedOutput()
         {
             Job test_job = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
-            Assert.AreEqual($"\nID: 11\nName: Product tester\nEmployer: ACME\nLocation: Desert\nJob: Quality control\nCompetency: Persistence\n", test_job.ToString());
+            Assert.AreEqual($"\nID: {test_job.Id}\nName: Product tester\nEmployer: ACME\nLocation: Desert\nJob: Quality control\nCompetency: Persistence\n", test_job.ToString());
         }
 
         [TestMethod]
@@ -128,6 +132,12 @@ namespace TechJobsTests
     }
 
 }
+
+
+
+
+                
+
 
                 
 
